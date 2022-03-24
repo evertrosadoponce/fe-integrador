@@ -1,0 +1,4 @@
+export enum TipoProcesoEnums{
+    PROCESO_CONSULTA="PROCESO_CONSULTA",
+    PROCESO_UPDATE="PROCESO_UPDATE"
+}

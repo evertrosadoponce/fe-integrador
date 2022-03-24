@@ -1,0 +1,116 @@
+
+
+
+
+<div nz-row [nzGutter]="{ xs: 2, sm: 4, md: 6, lg: 8, xl: 8, xxl: 8 }">
+    <div nz-col class="gutter-row" [nzSpan]="24" nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+        <nz-form-item>
+            <nz-form-label>Tabla:</nz-form-label>
+            <nz-form-control>   
+               <input nz-input placeholder="Ingrese nombre de tabla" [(ngModel)]="datosUpdate.tabla"/>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+</div>
+
+<p><i nz-icon nzType="edit" nzTheme="outline"></i> Programación</p>
+<nz-card> 
+    <div nz-row [nzGutter]="{ xs: 2, sm: 4, md: 6, lg: 8, xl: 8, xxl: 8 }">
+        
+            <div nz-col class="gutter-row" [nzSpan]="12" nzXs="12" nzSm="12" nzMd="12" nzLg="12" nzXl="12">
+                <nz-form-item>
+                    <nz-form-label></nz-form-label>
+                    <nz-form-control>  
+                        <label nz-checkbox [(ngModel)]="datosUpdate.esProgramada" (ngModelChange)="checkStatusFechaPrograma()">Programado</label>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col class="gutter-row" [nzSpan]="12" nzXs="12" nzSm="12" nzMd="12" nzLg="12" nzXl="12">
+                <nz-form-item>
+                    <nz-form-label>Fecha Programación:</nz-form-label>
+                    <nz-form-control>   
+                    <nz-date-picker [nzRenderExtraFooter]="mensajeExtra" nzShowTime [nzDisabled]="statusFecha" [(ngModel)]="datosUpdate.fechaEjecucion"></nz-date-picker>
+                    
+                    </nz-form-control>
+                </nz-form-item>
+            </div>        
+    </div>
+</nz-card> 
+
+<p><i nz-icon nzType="edit" nzTheme="outline"></i> Seteos</p>
+<div nz-row [nzGutter]="{ xs: 2, sm: 4, md: 6, lg: 8, xl: 8, xxl: 8 }">
+    <div nz-col class="gutter-row" [nzSpan]="24" nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+        <nz-card> 
+            <nz-form-item>
+                <nz-table  [nzFrontPagination]="false" [nzData]="['']">
+                    <thead>
+                        <tr>
+                            <td>Columnas</td>
+                            <td>Valores</td>
+                            <td>Acciones</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let seteoSel of seteosUpdate">
+                            <tr> 
+                                <td>
+                                    <input nz-input placeholder="Ingrese nombre de columna" [(ngModel)]="seteoSel.columna" />
+                                </td>
+                                <td>
+                                    <input nz-input placeholder="Ingrese valor de la columna" [(ngModel)]="seteoSel.valor" />
+                                </td>
+                                <td>
+                                    <button nzShape="round" nzType="primary" style="color: rgb(66, 122, 207);" (click)="agregarDataSeteo()" >
+                                        <i nz-icon nzType="plus" nzTheme="outline"></i>
+                                    </button>
+                                    <button nzShape="round" nzType="primary" style="color: rgb(66, 122, 207);" (click)="eliminarDataSeteo(seteoSel)" >
+                                        <i nz-icon nzType="minus" nzTheme="outline"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </nz-table>
+            </nz-form-item>
+        </nz-card>
+    </div>
+</div>
+
+<p><i nz-icon nzType="edit" nzTheme="outline"></i> Filtros</p>
+<div nz-row [nzGutter]="{ xs: 2, sm: 4, md: 6, lg: 8, xl: 8, xxl: 8 }">
+    <div nz-col class="gutter-row" [nzSpan]="24" nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+        <nz-card> 
+            <nz-form-item>
+                <nz-table  [nzFrontPagination]="false" [nzData]="['']">
+                    <thead>
+                        <tr>
+                            <td>Columnas</td>
+                            <td>Valores</td>
+                            <td>Acciones</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let filtroUpdate of filtrosUpdate">
+                            <tr> 
+                                <td>
+                                    <input nz-input placeholder="Ingrese nombre de columna" [(ngModel)]="filtroUpdate.columna" />
+                                </td>
+                                <td>
+                                    <input nz-input placeholder="Ingrese valor de la columna" [(ngModel)]="filtroUpdate.valor" />
+                                </td>
+                                <td>
+                                    <button nzShape="round" nzType="primary" style="color: rgb(66, 122, 207);" (click)="agregarDataFiltro()" >
+                                        <i nz-icon nzType="plus" nzTheme="outline"></i>
+                                    </button>
+                                    <button nzShape="round" nzType="primary" style="color: rgb(66, 122, 207);" (click)="eliminarDataFiltro(filtroUpdate)" >
+                                        <i nz-icon nzType="minus" nzTheme="outline"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </nz-table>
+            </nz-form-item>
+        </nz-card>
+    </div>
+</div>

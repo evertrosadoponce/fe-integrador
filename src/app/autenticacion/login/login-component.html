@@ -1,0 +1,67 @@
+
+
+    <div nz-row [nzGutter]="8">
+             
+        <div nz-col [nzSpan]="8">
+        </div>
+        <div nz-col [nzSpan]="8">
+            <div class="logo" >            
+            </div>
+        <h3 class="title">M&oacute;dulo de Despliegues</h3>
+        <form nz-form nzLayout="vertical" [formGroup]="frmAutentiacion" (ngSubmit)="loginAcceso()">
+            <div nz-row [nzGutter]="{ xs: 2, sm: 2, md: 2, lg: 2, xl: 2, xxl: 2 }">
+                <div nz-col class="gutter-row" [nzSpan]="24" nzXs="24" nzSm="24" nzMd="24" nzLg="24"
+                    nzXl="24">
+                    <nz-form-item>
+                        <nz-form-control>
+                            <nz-input-group nzSearch [nzAddOnBefore]="iconBtnUser">
+                                <input type="text" nz-input placeholder="Ingresa tu usuario"
+                                    formControlName="nombreUsuario" />
+                            </nz-input-group>
+                            <ng-template #iconBtnUser>
+                                <span><i nz-icon nzType="user" nzTheme="outline"></i></span>
+                            </ng-template>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div nz-row [nzGutter]="{ xs: 2, sm: 2, md: 2, lg: 2, xl: 2, xxl: 2 }">
+                <div nz-col class="gutter-row" [nzSpan]="24" nzXs="24" nzSm="24" nzMd="24" nzLg="24"
+                    nzXl="24">
+                    <nz-form-item>
+                        <nz-form-control>
+                            <nz-input-group [nzSuffix]="suffixTemplate" [nzAddOnBefore]="iconBtnPass">
+                                <input [type]="passwordVisible ? 'text' : 'password'" nz-input
+                                    placeholder="Ingresa tu Contraseña" formControlName="claveUsuario" />
+                            </nz-input-group>
+                            <ng-template #suffixTemplate>
+                                <i nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+                                    (click)="passwordVisible = !passwordVisible"></i>
+                            </ng-template>
+                            <ng-template #iconBtnPass>
+                                <span><i nz-icon nzType="key" nzTheme="outline"></i></span>
+                            </ng-template>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div nz-row  [nzGutter]="{ xs: 2, sm: 2, md: 2, lg: 2, xl: 2, xxl: 2 }">
+                <div nz-col class="gutter-row" [nzSpan]="8" nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="8">
+                    </div>
+                    <div nz-col class="gutter-row" [nzSpan]="8" nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="8">
+                <button nz-button  nzBlock nzType="primary" nzSize="default" nzShape="round"
+                    [nzLoading]="loadingBtn">
+                    Ingresar
+                </button>
+                </div>
+                <div nz-col class="gutter-row" [nzSpan]="8" nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="8">
+                </div>
+            </div>
+
+          
+        </form>
+        </div>
+        <div nz-col [nzSpan]="8">
+
+        </div>
+    </div>   

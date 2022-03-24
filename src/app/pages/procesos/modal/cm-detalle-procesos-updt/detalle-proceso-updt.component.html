@@ -1,0 +1,36 @@
+
+ <div style="margin-bottom: 0.25rem; padding: 1rem; width: 100%; background-color: #fafafa;">
+               
+    <button nz-button style="margin:0.1rem; float: right;"  (click)="exportarExcel()" >
+        <i nz-icon nzType="file-excel" nzTheme="outline" style="color:green;"></i> Exportar a Excel
+    </button>
+</div>
+
+<nz-table #Listado [nzData]="ListaDataResultado" nzSize="small" nzTableLayout="fixed" [nzLoading]="loadingData">
+    <thead>
+        <tr>
+           
+            <th style="text-align: center;width: 5%">Cod. Local</th>
+            <th style="text-align: center;width: 8%">Tabla</th>
+            <th style="text-align: center;width: 10%">Condici&oacute;n</th>
+            <th style="text-align: center;width: 10%">Valores Asignados</th>
+            <th style="text-align: center;width: 6%" >Estado</th>          
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let data of Listado.data">
+            <tr>
+              
+                <td>{{ data.codLocal }}</td>
+                <td>{{ nombreTabla }}</td>
+                <td>{{ filtroTabla }}</td>
+                <td>{{ seteoTabla }}</td>
+                <!--Inicio Columna Estado-->
+                <td *ngIf="data.estado==getEnumEstadoProceso().PROCESO_CON_ERROR"  nz-tooltip [nzTooltipTitle]="data.error" ><i nz-icon nzType="exclamation-circle" style="color: red;" ></i></td>
+                <td *ngIf="data.estado==getEnumEstadoProceso().PROCESO_PENDIENTE" ><i nz-icon nzType="clock-circle" ></i></td>            
+                <td *ngIf="data.estado==getEnumEstadoProceso().PROCESO_FINALIZADO" ><i nz-icon nzType="check-circle" style="color:green;"></i></td>            
+               <!--Fin Columna Estado-->
+            </tr>
+        </ng-container>
+    </tbody>
+</nz-table>

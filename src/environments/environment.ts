@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  urlServices:'http://localhost:8000/'
+  // urlServices:'https://dev-pos-integracion-ws.solucionesfps.pe/'
+  // urlServices:'https://pos-integracion-ws.farmaciasperuanas.pe/'
 };
 
 /*

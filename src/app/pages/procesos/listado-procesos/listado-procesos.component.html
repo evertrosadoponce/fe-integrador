@@ -1,0 +1,117 @@
+<nz-breadcrumb style="margin: 1rem;">
+    <nz-breadcrumb-item><i nz-icon nzType="home"></i></nz-breadcrumb-item>
+    <nz-breadcrumb-item>
+        <a (click)="getBack()">Procesos</a>
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item>Consulta</nz-breadcrumb-item>
+</nz-breadcrumb>
+<ng-template #iconTemplate><i nz-icon nzType="arrow-right"></i></ng-template>
+
+<div>
+    <form nz-form [nzLayout]="'inline'" [formGroup]="frmFiltros"> 
+        <nz-form-item>
+            <nz-form-control>   
+                <nz-input-group nzPrefixIcon="user">
+                    <input type="text" nz-input  formControlName="codProceso" placeholder="C&oacute;digo"/>
+                </nz-input-group>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-control>   
+                <nz-select formControlName="codTipoProceso"  nzAllowClear nzPlaceHolder="Seleccione Tipo">
+                    <nz-option [nzLabel]="getDesTipoProcesoTabla('PROCESO_CONSULTA')" [nzValue]="'PROCESO_CONSULTA'"></nz-option>
+                    <nz-option [nzLabel]="getDesTipoProcesoTabla('PROCESO_UPDATE')" [nzValue]="'PROCESO_UPDATE'"></nz-option>
+                 </nz-select>     
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-control>   
+                <nz-select formControlName="codStatus"  nzAllowClear nzPlaceHolder="Seleccione Estado">
+                    <nz-option [nzLabel]="getDesEstadoProcesoTabla('PROCESO_POR_AUTORIZAR')" [nzValue]="'PROCESO_POR_AUTORIZAR'"></nz-option>
+                    <nz-option [nzLabel]="getDesEstadoProcesoTabla('PROCESO_PENDIENTE')" [nzValue]="'PROCESO_PENDIENTE'"></nz-option>
+                    <nz-option [nzLabel]="getDesEstadoProcesoTabla('PROCESO_CON_ERROR')" [nzValue]="'PROCESO_CON_ERROR'"></nz-option>
+                    <nz-option [nzLabel]="getDesEstadoProcesoTabla('PROCESO_EN_PROCESO')" [nzValue]="'PROCESO_EN_PROCESO'"></nz-option>
+                    <nz-option [nzLabel]="getDesEstadoProcesoTabla('PROCESO_FINALIZADO')" [nzValue]="'PROCESO_FINALIZADO'"></nz-option>                  
+                 </nz-select>     
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-control>              
+                <button  nz-button nzType="primary" (click)="cargarGrilla()" nzShape="round">
+                    <i nz-icon nzType="filter" style="color:rgb(55, 164, 214)" ></i> Filtrar
+                </button>          
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</div>
+
+<div style="margin-bottom: 0.25rem; padding: 1rem; width: 100%; background-color: #fafafa;">
+    <button nz-button (click)="getBack()" style="margin: 0.12rem;">
+        <i nz-icon nzType="left-circle" style="color:green" ></i>
+    </button>
+    <button nz-button nzType="primary" style="margin:0.1rem" (click)="creaRegistro()">
+        <i nz-icon nzType="plus-circle" style="color: rgb(55, 164, 214);"></i> Nuevo Registro
+    </button>
+   
+    <button nz-button style="margin:0.1rem; float: right;"  (click)="exportarExcel()" >
+        <i nz-icon nzType="file-excel" style="color:green"></i> Exportar a Excel
+    </button>
+</div>
+
+<nz-table #Listado [nzData]="listaProcesos" nzSize="small" nzTableLayout="fixed" [nzLoading]="loadingData">
+    <thead>
+        <tr>
+            <th style="text-align: center;width: 10%">Acci&oacute;n</th>
+            <th style="text-align: center;width: 14%">C&oacute;digo</th>
+            <th style="text-align: center;width: 5%">Grupo Cia</th>
+            <th style="text-align: center;width: 5%">Cia</th>
+            <th style="text-align: center;width: 12%">Estado</th>
+            <th style="text-align: center;width: 13%">Tipo</th>   
+            <th style="text-align: center;width: 10%">Avances %</th>  
+            <th style="text-align: center;width: 4%">Proc.</th>  
+            <th style="text-align: center;width: 4%">Total</th> 
+            <th style="text-align: center;width: 8%">Inicio</th>     
+            <th style="text-align: center;width: 8%">Fin</th>      
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let data of Listado.data">
+            <tr>
+                <td style="text-align: center;">
+                  
+                    <button nz-button nzType="default" nzShape="circle" (click)="verDetalles(data)"
+                        title="Detalles" style="margin-right: 0.15rem;">
+                        <i nz-icon nzType="database" style="color:burlywood;" ></i>
+                    </button>
+                    <button nz-button nzType="default" nzShape="circle" (click)="cancelarProceso(data)"
+                        title="Cancelar Proceso" style="margin-right: 0.15rem;">
+                        <i nz-icon nzType="close-circle" style="color: red;" ></i>
+                    </button>
+                    <button nz-button nzType="default" nzShape="circle" (click)="aprobarProceso(data)"
+                        title="Aprobar Proceso" style="margin-right: 0.15rem;">
+                        <i nz-icon nzType="check-circle" style="color: green;" ></i>
+                     </button>
+                </td>
+                <td>{{ data.codProceso }}</td>
+                <td>{{ data.codGrupoCia }}</td>
+                <td>{{ data.codCia }}</td>
+                <td>{{ getDesEstadoProcesoTabla(data.codStatus) }}</td>
+                <td>{{ getDesTipoProcesoTabla(data.codTipoProceso) }}</td>
+               <!--  <td>{{ data.tareasRealizadas? data.tareasRealizadas:'0'}} de {{ data.tareasProgramadas }}</td>-->
+
+                <td><nz-progress [nzPercent]="data.porcentajeTareas" nzSize="small"> </nz-progress> </td>
+                <td style="text-align: right;">{{ data.tareasRealizadas }}</td>
+                <td style="text-align: right;">{{ data.tareasProgramadas }}</td>
+                <td>{{ data.fecIniProc | date :'dd/MM/yyyy hh:mm:ss' }}</td>
+                <td>{{ data.fecFinProc | date :'dd/MM/yyyy hh:mm:ss' }}</td>
+            </tr>
+        </ng-container>
+    </tbody>
+</nz-table>
+<ng-template #customTpl let-name>
+    <div style="text-align: center;">
+        <i nz-icon nzType="smile" style="font-size: 20px;"></i>
+        <!-- <p>Data Not Found in {{ name }}</p> -->
+       <!-- <p>{{ messageData }}</p> -->
+    </div>
+</ng-template>

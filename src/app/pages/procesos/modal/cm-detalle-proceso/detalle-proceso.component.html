@@ -1,0 +1,59 @@
+
+ <div style="margin-bottom: 0.25rem; padding: 1rem; width: 100%; background-color: #fafafa;">
+               
+    <button nz-button style="margin:0.1rem; float: right;"  (click)="exportarExcel()" >
+        <i nz-icon nzType="file-excel" nzTheme="outline" style="color:green;"></i> Exportar a Excel
+    </button>
+</div>
+
+<nz-table #Listado [nzData]="listaResultados" nzSize="small" nzTableLayout="fixed" [nzLoading]="loadingData">
+    <thead>
+        <tr>
+           
+            <th style="text-align: center;width: 4%">Cod. Local</th>
+            <th style="text-align: center;width: 10%" >Tabla</th>
+
+            <ng-container *ngIf="listaColumnas">  
+                <ng-container  *ngFor="let data of  listaColumnas">
+                    <th style="text-align: center;width: 6%">{{data.nombre}}</th>
+                </ng-container>
+            </ng-container>
+
+            <th style="text-align: center;width: 3%" >Estado</th>
+
+        </tr>
+    </thead>   
+
+    <tbody>
+        <ng-container *ngFor="let data of Listado.data">
+            <tr>
+              
+                <td>{{ data.codigoLocal }}</td>
+                <td>{{ data.tablas[0].nombreTabla }}</td>
+
+                 <!--Inicio Columnas dinámicas-->
+                 <ng-container *ngIf="listaColumnas && data.tablas">  
+                    <ng-container *ngIf="data.tablas[0].totalRegistros>0">  
+                        <ng-container  *ngFor="let dataCol of  data.tablas[0].columnaTabla">
+                            <td>{{ dataCol.valor[0] }}</td>
+                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="data.tablas[0].totalRegistros==0">  
+                        <ng-container *ngIf="listaColumnas">  
+                            <ng-container  *ngFor="let data of  listaColumnas">
+                                <td></td>
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+                <!--Fin Columnas dinámicas-->
+
+                 <!--Inicio Columna Estado-->
+                 <td *ngIf="data.estado==getEnumEstadoProceso().PROCESO_CON_ERROR"   nz-tooltip [nzTooltipTitle]="data.error"  ><i nz-icon nzType="exclamation-circle" style="color: red;" ></i></td>
+                 <td *ngIf="data.estado==getEnumEstadoProceso().PROCESO_PENDIENTE" ><i nz-icon nzType="clock-circle" ></i></td>            
+                 <td *ngIf="data.estado==getEnumEstadoProceso().PROCESO_FINALIZADO" ><i nz-icon nzType="check-circle" style="color:green;"></i></td>            
+                <!--Fin Columna Estado-->
+            </tr>
+        </ng-container>
+    </tbody>
+</nz-table>
